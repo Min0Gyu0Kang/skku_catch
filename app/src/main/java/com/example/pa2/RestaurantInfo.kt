@@ -1,6 +1,6 @@
 package com.example.pa2
 
-data class Restaurant(
+data class RestaurantInfo(
     val id: Int,
     val name: String,
     val type: String,

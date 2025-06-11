@@ -10,7 +10,7 @@ class MainActivity : ComponentActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity0)
 
-        val loginButton = findViewById<Button>(R.id.login)
+        val loginButton = findViewById<Button>(R.id.reserve)
         loginButton.setOnClickListener {
             // 로그인 검증 로직 추가 가능
             val intent = Intent(this, Activity1::class.java)

@@ -24,7 +24,7 @@
         app:layout_constraintVertical_bias="0.11" />
 
     <Button
-        android:id="@+id/login"
+        android:id="@+id/reserve"
         android:layout_width="383dp"
         android:layout_height="49dp"
         android:layout_marginStart="24dp"
@@ -47,7 +47,7 @@
         android:textAlignment="viewStart"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/login" />
+        app:layout_constraintTop_toBottomOf="@+id/reserve" />
 
     <ListView
         android:id="@+id/reserve_list"
