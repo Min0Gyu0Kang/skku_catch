@@ -11,12 +11,14 @@ import androidx.activity.ComponentActivity
 import org.json.JSONArray
 import java.io.File
 import java.io.InputStream
+import android.util.Log
 
 class Activity5 : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity5)
 
+        val userId = intent.getStringExtra("user_id") ?: ""
         val people = intent.getIntExtra("people", 1)
         val date = intent.getStringExtra("date") ?: "00/00/00"
         val restaurantId = intent.getIntExtra("restaurant_id", 1)
@@ -31,6 +33,8 @@ class Activity5 : ComponentActivity() {
 
         val timePicker = findViewById<TimePicker>(R.id.a5_time_reserve)
         timePicker.setIs24HourView(true)
+        timePicker.hour = 1
+        timePicker.minute = 0 // 기본값 1:00
 
         //confirm 버튼 클릭 시 activity 6
         val confirmButton = findViewById<Button>(R.id.a5_confirm)
@@ -47,9 +51,12 @@ class Activity5 : ComponentActivity() {
                 return@setOnClickListener
             }
 
-            // 로그인 유저 정보 받아오기 (Activity0~4에서 user_id 전달 필요)
-            val userId = intent.getStringExtra("user_id") ?: return@setOnClickListener
-
+            // .env에서 user_id 읽기
+            val userId = getUserIdFromEnv()
+            if (userId.isEmpty()) {
+                Toast.makeText(this, "User not logged in", Toast.LENGTH_SHORT).show()
+                return@setOnClickListener
+            }
             // 내부 저장소에서 user_info.txt 읽기 (없으면 assets에서 복사)
             val file = getFileStreamPath("user_info.txt")
             if (!file.exists()) {
@@ -91,6 +98,11 @@ class Activity5 : ComponentActivity() {
                     break
                 }
             }
+            // 예약 추가 직전
+            Log.d(
+                "Activity5",
+                "예약 추가: userId=$userId, restaurantId=$restaurantId, date=$date, time=$timeStr"
+            )
 
             // 파일에 저장
             openFileOutput("user_info.txt", MODE_PRIVATE).use {
@@ -150,4 +162,17 @@ class Activity5 : ComponentActivity() {
 
     // 4개 값 반환용 데이터 클래스
     data class Quad<A, B, C, D>(val first: A, val second: B, val third: C, val fourth: D)
+
+    //.env 파일에서 user_id 읽기
+    private fun getUserIdFromEnv(): String {
+        val file = getFileStreamPath(".env")
+        if (!file.exists()) return ""
+        val lines = openFileInput(".env").bufferedReader().readLines()
+        for (line in lines) {
+            if (line.startsWith("user_id=")) {
+                return line.substringAfter("=")
+            }
+        }
+        return ""
+    }
 }

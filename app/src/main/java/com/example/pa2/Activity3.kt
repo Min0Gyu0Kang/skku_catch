@@ -2,6 +2,7 @@ package com.example.pa2
 
 import android.content.Intent
 import android.os.Bundle
+import android.util.Log
 import android.view.View
 import android.widget.Button
 import android.widget.ImageView
@@ -16,6 +17,7 @@ class Activity3 : ComponentActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity3)
 
+        val userId = intent.getStringExtra("user_id") ?: ""
         val restaurantId = intent.getIntExtra("restaurant_id", 1)
         val restaurantDetail = loadRestaurantDetailById(restaurantId)
 
@@ -43,12 +45,13 @@ class Activity3 : ComponentActivity() {
             restaurantDetail.menu
         )
         menuListView.adapter = adapter
-
         // reservation 버튼 클릭 시 activity 4
         val reservationButton = findViewById<Button>(R.id.a3_reservation)
         reservationButton.setOnClickListener {
+            val userId = intent.getStringExtra("user_id") ?: ""
             val intent = Intent(this, Activity4::class.java)
             intent.putExtra("restaurant_id", restaurantId)
+            intent.putExtra("user_id", userId)
             startActivity(intent)
         }
     }

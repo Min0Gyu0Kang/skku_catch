@@ -6,22 +6,24 @@ import androidx.activity.ComponentActivity
 import org.json.JSONArray
 import java.io.InputStream
 import android.content.Intent
+import android.util.Log
 
 class Activity2 : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity2)
 
+        val userId = intent.getStringExtra("user_id") ?: ""
         val (restaurants, openingHours) = loadRestaurantsWithOpeningHours()
         val listView = findViewById<ListView>(R.id.a2_reservations)
         val adapter = Activity2Adapter(this, restaurants, openingHours)
         listView.adapter = adapter
-
         // 리스트 아이템 클릭 시 Activity3로 이동
         listView.setOnItemClickListener { _, _, position, _ ->
             val restaurant = restaurants[position]
             val intent = Intent(this, Activity3::class.java)
             intent.putExtra("restaurant_id", restaurant.id)
+            intent.putExtra("user_id", intent.getStringExtra("user_id"))
             startActivity(intent)
         }
     }

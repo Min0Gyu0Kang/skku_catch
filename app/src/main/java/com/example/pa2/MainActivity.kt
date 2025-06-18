@@ -31,6 +31,11 @@ class MainActivity : ComponentActivity() {
                 intent.putExtra("user_gender", infoObj.getString("gender"))
                 val reservedArray = userObj.getJSONArray("reserved")
                 intent.putExtra("user_reserved", reservedArray.toString())
+                intent.putExtra("user_id", userObj.getString("id"))
+                // user_id를 .env 파일에 저장
+                openFileOutput(".env", MODE_PRIVATE).use {
+                    it.write("user_id=${userObj.getString("id")}".toByteArray())
+                }
                 startActivity(intent)
                 finish()
             } else {

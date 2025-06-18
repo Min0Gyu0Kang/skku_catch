@@ -12,6 +12,7 @@ class Activity4 : ComponentActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity4)
 
+        val userId = intent.getStringExtra("user_id") ?: ""
         val spinner = findViewById<Spinner>(R.id.spinner)
         val calendarView = findViewById<CalendarView>(R.id.a4_calendarView)
 

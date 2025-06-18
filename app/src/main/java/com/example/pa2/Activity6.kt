@@ -2,9 +2,12 @@ package com.example.pa2
 
 import android.content.Intent
 import android.os.Bundle
+import android.os.Handler
+import android.os.Looper
 import android.widget.Button
 import android.widget.ImageView
 import android.widget.TextView
+import android.widget.Toast
 import androidx.activity.ComponentActivity
 import org.json.JSONArray
 import java.io.InputStream
@@ -14,14 +17,13 @@ class Activity6 : ComponentActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity6)
 
-        // Activity 전달받은 값 읽기
         val restaurantName = intent.getStringExtra("restaurant_name") ?: "Unknown"
         val restaurantImage = intent.getStringExtra("restaurant_image") ?: ""
         val people = intent.getIntExtra("people", 1)
         val date = intent.getStringExtra("date") ?: "00/00/00"
         val time = intent.getStringExtra("time") ?: "00:00"
+        val reservationId = intent.getIntExtra("reservation_id", -1)
 
-        // 뷰에 표시
         findViewById<TextView>(R.id.a6_restaurant).text = restaurantName
         val resId = resources.getIdentifier(restaurantImage, "drawable", packageName)
         findViewById<ImageView>(R.id.a6_figure).setImageResource(if (resId != 0) resId else R.drawable.ic_launcher_background)
@@ -29,25 +31,29 @@ class Activity6 : ComponentActivity() {
         findViewById<TextView>(R.id.a6_date).text = "Dates: $date"
         findViewById<TextView>(R.id.a6_time).text = "Times: $time"
 
-        //cancel 버튼 클릭 시 에약 내역 지우고 activity 1
         val cancelButton = findViewById<Button>(R.id.a6_cancel)
         cancelButton.setOnClickListener {
-            val userId = intent.getStringExtra("user_id") ?: return@setOnClickListener
-            val reservationId = intent.getIntExtra("reservation_id", -1)
-            if (reservationId == -1) return@setOnClickListener
+            val userId = getUserIdFromEnv()
+            if (userId.isEmpty() || reservationId == -1) return@setOnClickListener
 
             // user_info.txt 읽기
-            val inputStream = assets.open("user_info.txt")
-            val json = inputStream.bufferedReader().use { it.readText() }
+            val file = getFileStreamPath("user_info.txt")
+            if (!file.exists()) {
+                assets.open("user_info.txt").use { input ->
+                    openFileOutput("user_info.txt", MODE_PRIVATE).use { output ->
+                        input.copyTo(output)
+                    }
+                }
+            }
+            val json = openFileInput("user_info.txt").bufferedReader().use { it.readText() }
             val users = JSONArray(json)
 
-            // 해당 유저 찾기
+            // 해당 유저의 예약 삭제 (역순 반복)
             for (i in 0 until users.length()) {
                 val user = users.getJSONObject(i)
                 if (user.getString("id") == userId) {
                     val reserved = user.getJSONArray("reserved")
-                    // 예약 삭제
-                    for (j in 0 until reserved.length()) {
+                    for (j in reserved.length() - 1 downTo 0) {
                         val res = reserved.getJSONObject(j)
                         if (res.getInt("reservation_id") == reservationId) {
                             reserved.remove(j)
@@ -57,9 +63,28 @@ class Activity6 : ComponentActivity() {
                     break
                 }
             }
+            openFileOutput("user_info.txt", MODE_PRIVATE).use {
+                it.write(users.toString().toByteArray())
+            }
 
-            val intent = Intent(this, Activity1::class.java)
-            startActivity(intent)
+            Toast.makeText(this, "Reservations has been canceled.", Toast.LENGTH_SHORT).show()
+            Handler(Looper.getMainLooper()).postDelayed({
+                val intent = Intent(this, Activity1::class.java)
+                startActivity(intent)
+            }, 800) // 0.8초 후 이동
         }
+    }
+
+    // .env에서 user_id 읽기
+    private fun getUserIdFromEnv(): String {
+        val file = getFileStreamPath(".env")
+        if (!file.exists()) return ""
+        val lines = openFileInput(".env").bufferedReader().readLines()
+        for (line in lines) {
+            if (line.startsWith("user_id=")) {
+                return line.substringAfter("=")
+            }
+        }
+        return ""
     }
 }
