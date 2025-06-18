@@ -5,7 +5,8 @@
     android:id="@+id/linearLayout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical">
+    android:orientation="vertical"
+    tools:locale="en">
 
     <TextView
         android:id="@+id/a4_title2"
@@ -36,39 +37,49 @@
         android:layout_width="351dp"
         android:layout_height="47dp"
         android:layout_marginStart="24dp"
-        android:layout_marginTop="29dp"
+        android:layout_marginTop="24dp"
         android:text="Dates: 00/00/00"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/a5_people" />
 
     <TextView
         android:id="@+id/a5_opening"
-        android:layout_width="353dp"
-        android:layout_height="45dp"
+        android:layout_width="348dp"
+        android:layout_height="43dp"
         android:layout_marginStart="24dp"
-        android:layout_marginTop="14dp"
+        android:layout_marginTop="24dp"
         android:text="Opening Hours"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/a5_date" />
+
+    <TextView
+        android:id="@+id/a5_opening2"
+        android:layout_width="348dp"
+        android:layout_height="43dp"
+        android:layout_marginStart="24dp"
+        android:layout_marginTop="8dp"
+        android:text="00:00 ~ 00:00"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/a5_opening" />
 
     <TextView
         android:id="@+id/a5_time"
         android:layout_width="355dp"
         android:layout_height="31dp"
         android:layout_marginStart="24dp"
-        android:layout_marginTop="18dp"
+        android:layout_marginTop="24dp"
         android:text="Time"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/a5_opening" />
+        app:layout_constraintTop_toBottomOf="@id/a5_opening2" />
 
-    <EditText
+    <TimePicker
         android:id="@+id/a5_time_reserve"
-        android:layout_width="192dp"
-        android:layout_height="57dp"
+        android:layout_width="353dp"
+        android:layout_height="138dp"
         android:layout_marginStart="24dp"
-        android:layout_marginTop="12dp"
-        android:ems="10"
-        android:inputType="time"
+        android:layout_marginTop="24dp"
+        android:theme="@android:style/Theme.Material.Light.Dialog"
+        android:timePickerMode="spinner"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/a5_time" />
 

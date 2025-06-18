@@ -15,7 +15,15 @@
             "number_of_people" : 4,
             "date" : "2024-06-01",
             "time" : "18:00"
+        },
+	{   
+            "reservation_id": 2,
+            "restaurant_id" : 2,
+            "number_of_people" : 4,
+            "date" : "2025-06-18",
+            "time" : "18:00"
         }
+
       ]
     },
     {

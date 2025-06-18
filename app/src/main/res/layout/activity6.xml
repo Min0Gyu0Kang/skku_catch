@@ -20,11 +20,11 @@
         app:layout_constraintStart_toStartOf="parent" />
 
     <TextView
-        android:id="@+id/textView"
+        android:id="@+id/a6_restaurant"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="24dp"
-        android:layout_marginTop="12dp"
+        android:layout_marginTop="32dp"
         android:text="Restaurant Name"
         android:textSize="24sp"
         app:layout_constraintStart_toStartOf="parent"
@@ -35,7 +35,7 @@
         android:layout_width="349dp"
         android:layout_height="41dp"
         android:layout_marginStart="24dp"
-        android:layout_marginTop="27dp"
+        android:layout_marginTop="32dp"
         android:layout_marginEnd="24dp"
         android:text="People: num"
         app:layout_constraintEnd_toEndOf="parent"
@@ -44,11 +44,11 @@
 
     <TextView
         android:id="@+id/a6_date"
-        android:layout_width="351dp"
-        android:layout_height="47dp"
+        android:layout_width="349dp"
+        android:layout_height="41dp"
         android:layout_marginStart="24dp"
-        android:layout_marginTop="29dp"
-        android:layout_marginEnd="36dp"
+        android:layout_marginTop="32dp"
+        android:layout_marginEnd="24dp"
         android:layout_marginBottom="77dp"
         android:text="Dates: 00/00/00"
         app:layout_constraintBottom_toTopOf="@+id/a6_time"
@@ -58,11 +58,11 @@
 
     <TextView
         android:id="@+id/a6_time"
-        android:layout_width="355dp"
-        android:layout_height="31dp"
+        android:layout_width="349dp"
+        android:layout_height="41dp"
         android:layout_marginStart="24dp"
-        android:layout_marginTop="77dp"
-        android:layout_marginEnd="32dp"
+        android:layout_marginTop="32dp"
+        android:layout_marginEnd="24dp"
         android:text="Times: 00:00"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -77,12 +77,12 @@
         android:layout_marginEnd="24dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textView"
+        app:layout_constraintTop_toBottomOf="@+id/a6_restaurant"
         app:srcCompat="@drawable/ic_launcher_background" />
 
     <TextView
         android:id="@+id/a6_reserve_title"
-        android:layout_width="341dp"
+        android:layout_width="349dp"
         android:layout_height="51dp"
         android:layout_marginStart="24dp"
         android:layout_marginTop="18dp"
