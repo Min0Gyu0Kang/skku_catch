@@ -69,6 +69,8 @@ class Activity6 : ComponentActivity() {
 
             Toast.makeText(this, "Reservations has been canceled.", Toast.LENGTH_SHORT).show()
             Handler(Looper.getMainLooper()).postDelayed({
+                // .env 파일 비우기
+                openFileOutput(".env", MODE_PRIVATE).use { it.write("".toByteArray()) }
                 val intent = Intent(this, Activity1::class.java)
                 startActivity(intent)
             }, 800) // 0.8초 후 이동

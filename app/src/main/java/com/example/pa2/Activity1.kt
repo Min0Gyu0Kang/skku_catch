@@ -14,7 +14,8 @@ class Activity1 : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity1)
-
+        //.env 초기화
+        openFileOutput(".env", MODE_PRIVATE).use { it.write("".toByteArray()) }
         // .env에서 user_id 읽기
         val userId = getUserIdFromEnv()
         if (userId.isEmpty()) {
