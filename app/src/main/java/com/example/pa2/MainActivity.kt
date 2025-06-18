@@ -32,6 +32,8 @@ class MainActivity : ComponentActivity() {
                 val reservedArray = userObj.getJSONArray("reserved")
                 intent.putExtra("user_reserved", reservedArray.toString())
                 intent.putExtra("user_id", userObj.getString("id"))
+                //.env 초기화
+                openFileOutput(".env", MODE_PRIVATE).use { it.write("".toByteArray()) }
                 // user_id를 .env 파일에 저장
                 openFileOutput(".env", MODE_PRIVATE).use {
                     it.write("user_id=${userObj.getString("id")}".toByteArray())
